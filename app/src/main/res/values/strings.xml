@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Prestashop</string>
+    <string name="home_header_text">Valori hybrid app demo</string>
+    <string name="prestashop_url">http://automationpractice.com/</string>
+    <string name="navigate_back_error">"Can't navigate back"</string>
+    <string name="navigate_forward_error">"Can't navigate forward"</string>
+    <string name="back_button_text">Back</string>
+    <string name="forward_button_text">Forward</string>
+
+    <string name="app_info_title">Valori</string>
+    <string name="app_info_sub_title">Address</string>
+    <string name="app_info_body_text">Orteliuslaan 1000\n3528 BD\nUtrecht\nPostbus 595\n3430 AN Nieuwegein</string>
+</resources>
