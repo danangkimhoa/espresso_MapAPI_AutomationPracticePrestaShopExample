@@ -10,4 +10,7 @@
     <string name="app_info_title">Valori</string>
     <string name="app_info_sub_title">Address</string>
     <string name="app_info_body_text">Orteliuslaan 1000\n3528 BD\nUtrecht\nPostbus 595\n3430 AN Nieuwegein</string>
+
+    <string name="google_maps_key">AIzaSyBdmAvETjAFYozzFXJpXiDsTuHwvZiZcPw</string>
+
 </resources>
