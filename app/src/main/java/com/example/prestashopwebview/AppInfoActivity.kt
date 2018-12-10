@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.bottom_navigation_bar.*
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_app_info.*
 
 
 class AppInfoActivity : AppCompatActivity(), OnMapReadyCallback {
