@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setWebViewConfig()
-        restoreStateOfWebviewOrOpenDefaultUri(savedInstanceState)
+        restoreStateOfWebViewOrOpenDefaultUri(savedInstanceState)
         setBackButtonToNavigateBackInWebViewHistory()
         setForwardButtonToNavigateForwardInWebViewHistory()
         setLeaveAppButtonToOpenUrlInBrowser()
@@ -83,9 +83,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun restoreStateOfWebviewOrOpenDefaultUri(savedInstanceState: Bundle?) {
+    private fun restoreStateOfWebViewOrOpenDefaultUri(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             prestashop_webview.restoreState(savedInstanceState);
+        } else {
+            loadUrl()
+        }
+    }
+
+    private fun loadUrl() {
+        if (!DetectConnection.checkInternetConnection(this@MainActivity)) {
+            Toast.makeText(this, getString(R.string.page_load_connectivity_error), Toast.LENGTH_LONG).apply { show() }
         } else {
             prestashop_webview.loadUrl(getString(R.string.prestashop_url))
         }

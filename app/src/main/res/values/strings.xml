@@ -6,7 +6,7 @@
     <string name="navigate_forward_error">"Can't navigate forward"</string>
     <string name="back_button_text">Back</string>
     <string name="forward_button_text">Forward</string>
-
+    <string name="page_load_connectivity_error">Page could not be loaded. Please check your network settings</string>
     <string name="app_info_title">Valori</string>
     <string name="app_info_sub_title">Address</string>
     <string name="app_info_body_text">Orteliuslaan 1000\n3528 BD\nUtrecht\nPostbus 595\n3430 AN Nieuwegein</string>
