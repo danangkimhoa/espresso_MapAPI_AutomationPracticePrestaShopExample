@@ -54,6 +54,27 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_info_body_text"
                 app:layout_constraintTop_toBottomOf="@id/map" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@android:style/TextAppearance.Medium"
+                app:layout_constraintTop_toBottomOf="@id/body_text"
+                app:errorTextAppearance="@color/colorAccent"
+                app:errorEnabled="true">
+
+            <EditText
+                android:inputType="textMultiLine"
+                android:hint="Enter email message"
+                android:lines="8"
+                android:minLines="6"
+                android:gravity="top|left"
+                android:maxLines="10"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toBottomOf="@id/body_text"/>
+            </android.support.design.widget.TextInputLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
     <include
