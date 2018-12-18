@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebViewClient
@@ -14,15 +15,16 @@ import kotlinx.android.synthetic.main.bottom_navigation_bar.*
 import android.webkit.WebView
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
+    override fun onRefresh() {
+        loadUrl()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        webview_progress.setVisibility(View.GONE)
-
-        prestashop_webview
+        swipe.setOnRefreshListener(this)
 
         setWebViewConfig()
         restoreStateOfWebViewOrOpenDefaultUri(savedInstanceState)
@@ -49,13 +51,14 @@ class MainActivity : AppCompatActivity() {
 
         prestashop_webview.webViewClient = object: WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                webview_progress.visibility = View.VISIBLE
+                //webview_progress.visibility = View.VISIBLE
+                swipe.isRefreshing = true
                 super.onPageStarted(view, url, favicon)
             }
             override fun onPageCommitVisible(view: WebView?, url: String?) {
                 back_button.isEnabled = prestashop_webview.canGoBack()
                 forward_button.isEnabled = prestashop_webview.canGoForward()
-                webview_progress.visibility = View.GONE
+                swipe.isRefreshing = false
                 super.onPageCommitVisible(view, url)
             }
         }
@@ -112,7 +115,8 @@ class MainActivity : AppCompatActivity() {
         if (!DetectConnection.checkInternetConnection(this@MainActivity)) {
             Toast.makeText(this, getString(R.string.page_load_connectivity_error), Toast.LENGTH_LONG).apply { show() }
         } else {
-            prestashop_webview.loadUrl(getString(R.string.prestashop_url))
+            prestashop_webview.loadUrl(prestashop_webview.url
+                    ?: getString(R.string.prestashop_url))//getString(R.string.prestashop_url))
         }
     }
 
