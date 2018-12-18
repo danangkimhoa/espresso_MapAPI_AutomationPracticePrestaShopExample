@@ -1,10 +1,12 @@
 package com.example.prestashopwebview
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebViewClient
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,12 +20,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        webview_progress.setVisibility(View.GONE)
+
+        prestashop_webview
+
         setWebViewConfig()
         restoreStateOfWebViewOrOpenDefaultUri(savedInstanceState)
         setBackButtonToNavigateBackInWebViewHistory()
         setForwardButtonToNavigateForwardInWebViewHistory()
         setLeaveAppButtonToOpenUrlInBrowser()
         setInfoButtonToOpenAppInfoActivity()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // refresh webview?
     }
 
     private fun setInfoButtonToOpenAppInfoActivity() {
@@ -35,12 +46,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setWebViewConfig() {
         prestashop_webview.settings.javaScriptEnabled = true
+
         prestashop_webview.webViewClient = object: WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                webview_progress.visibility = View.VISIBLE
+                super.onPageStarted(view, url, favicon)
+            }
+            override fun onPageCommitVisible(view: WebView?, url: String?) {
                 back_button.isEnabled = prestashop_webview.canGoBack()
                 forward_button.isEnabled = prestashop_webview.canGoForward()
-                super.onPageFinished(view, url)
-             }
+                webview_progress.visibility = View.GONE
+                super.onPageCommitVisible(view, url)
+            }
         }
     }
 
