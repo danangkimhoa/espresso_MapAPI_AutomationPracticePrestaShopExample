@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
             Toast.makeText(this, getString(R.string.page_load_connectivity_error), Toast.LENGTH_LONG).apply { show() }
         } else {
             prestashop_webview.loadUrl(prestashop_webview.url
-                    ?: getString(R.string.prestashop_url))//getString(R.string.prestashop_url))
+                    ?: getString(R.string.prestashop_url))
         }
     }
 

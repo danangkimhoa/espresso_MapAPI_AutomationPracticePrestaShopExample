@@ -5,12 +5,9 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.constraint.ConstraintSet
 import android.view.View
-import android.view.WindowManager
 import com.example.prestashopwebview.Utils.hideKeyboard
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,7 +17,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_app_info.*
-import org.jetbrains.anko.email
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -41,30 +37,21 @@ class AppInfoActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_info)
-
-
+        
         hideUnusedNavigationButtons()
         setBackBehaviourToFinishActivity()
-        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-//        ConstraintSet().connect(bottom_navigation_bar.id, ConstraintSet.BOTTOM,ConstraintSet.PARENT_ID,ConstraintSet.BOTTOM,0)
-//        email_text_box.setOnFocusChangeListener { _, hasFocus ->
-//            if (hasFocus) {
-//                bottom_navigation_bar.visibility = View.GONE
-//            } else {
-//                bottom_navigation_bar.visibility = View.VISIBLE
-//            }
-//        }
 
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         setUpMap()
         submit_email.setOnClickListener {
-            if (email_text_box.text.isBlank()) {
-                email_input_layout.setError("Enter a message please"); // show error
-            } else {
-                hideKeyboard(this)
-                submitEmail(email_text_box.text.toString())
+            if (email_text_box.text != null) {
+                if (email_text_box.text!!.isBlank()) {
+                    email_input_layout.setError("Enter a message please"); // show error
+                } else {
+                    hideKeyboard(this)
+                    submitEmail(email_text_box.text.toString())
+                }
             }
         }
     }
