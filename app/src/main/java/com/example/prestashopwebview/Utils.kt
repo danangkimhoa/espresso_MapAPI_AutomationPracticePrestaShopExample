@@ -14,6 +14,6 @@ object Utils {
         if (view == null) {
             view = View(activity)
         }
-        imm!!.hideSoftInputFromWindow(view!!.windowToken, 0)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
