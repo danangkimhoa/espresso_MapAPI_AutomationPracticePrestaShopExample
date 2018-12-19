@@ -37,7 +37,7 @@ class AppInfoActivity : AppCompatActivity(), OnMapReadyCallback, EasyPermissions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_info)
-        
+
         hideUnusedNavigationButtons()
         setBackBehaviourToFinishActivity()
 
