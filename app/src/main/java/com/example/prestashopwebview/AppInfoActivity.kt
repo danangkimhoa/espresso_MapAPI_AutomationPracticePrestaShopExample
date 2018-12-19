@@ -2,9 +2,13 @@ package com.example.prestashopwebview
 
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.constraint.ConstraintSet
 import android.view.View
+import android.view.WindowManager
+import com.example.prestashopwebview.Utils.hideKeyboard
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -13,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_app_info.*
+import org.jetbrains.anko.email
 
 
 class AppInfoActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -22,17 +27,34 @@ class AppInfoActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_info)
-        input_layout.setError("First name is required"); // show error
-        input_layout.setError(null);
+
 
         hideUnusedNavigationButtons()
         setBackBehaviourToFinishActivity()
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//        ConstraintSet().connect(bottom_navigation_bar.id, ConstraintSet.BOTTOM,ConstraintSet.PARENT_ID,ConstraintSet.BOTTOM,0)
+//        email_text_box.setOnFocusChangeListener { _, hasFocus ->
+//            if (hasFocus) {
+//                bottom_navigation_bar.visibility = View.GONE
+//            } else {
+//                bottom_navigation_bar.visibility = View.VISIBLE
+//            }
+//        }
 
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         val mapFragment : SupportMapFragment? =
                 supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+
+        submit_email.setOnClickListener {
+            if (email_text_box.text.isBlank()) {
+                email_input_layout.setError("Enter a message please"); // show error
+            } else {
+                hideKeyboard(this)
+                submitEmail(email_text_box.text.toString())
+            }
+        }
     }
 
     private fun setBackBehaviourToFinishActivity() {
@@ -59,9 +81,9 @@ class AppInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun submitEmail(view: View) {
+    private fun submitEmail(body: String) {
         val emailAdresses = arrayOf("test@test.nl")
-        composeEmail(emailAdresses, "Test email subject", "")
+        composeEmail(emailAdresses, "Test email subject", body)
     }
 
     private fun composeEmail(addresses: Array<String>, subject: String, body: String) {
