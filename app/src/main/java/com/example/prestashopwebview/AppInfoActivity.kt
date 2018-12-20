@@ -1,6 +1,7 @@
 package com.example.prestashopwebview
 
 import android.content.Intent
+import android.icu.text.IDNA
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -19,8 +20,11 @@ class AppInfoActivity : AppCompatActivity(), ValoriMapFragment.OnMapSelected {
         if (mapFragment == null) {
             mapFragment = ValoriMapFragment.newInstance()
         }
+        mapFragment.setData(AddressMap(getString(R.string.app_info_body_text)))
+        supportFragmentManager.beginTransaction().remove(mapFragment).commit();
+        supportFragmentManager.executePendingTransactions();
         supportFragmentManager.beginTransaction()
-                .replace(R.id.root_layout, mapFragment, ValoriMapFragment.FRAGMENT_TAG)
+                .replace(R.id.fragment_container, mapFragment, ValoriMapFragment.FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit()
     }
@@ -29,31 +33,20 @@ class AppInfoActivity : AppCompatActivity(), ValoriMapFragment.OnMapSelected {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_info)
 
-        if (savedInstanceState == null) {
-            var mapFragment = supportFragmentManager.findFragmentByTag(ValoriMapFragment.FRAGMENT_TAG) as? ValoriMapFragment
-            if (mapFragment == null) {
-                mapFragment = ValoriMapFragment.newInstance()
-            }
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.map_fragment, mapFragment, ValoriMapFragment.FRAGMENT_TAG)
-                        .commit()
-                mapFragment.setData(AddressMap(getString(R.string.app_info_body_text)))
-        }
-
         hideUnusedNavigationButtons()
         setBackBehaviourToFinishActivity()
 
-        submit_email.setOnClickListener {
-            if (email_text_box.text != null) {
-                if (email_text_box.text!!.isBlank()) {
-                    email_input_layout.setError("Enter a message please"); // show error
-                } else {
-                    hideKeyboard(this)
-                    submitEmail(email_text_box.text.toString())
-                }
+        if (savedInstanceState == null) {
+            var infoOverviewFragment = supportFragmentManager.findFragmentByTag(ValoriMapFragment.FRAGMENT_TAG) as? InfoOverViewFragment
+            if (infoOverviewFragment == null) {
+                infoOverviewFragment = InfoOverViewFragment.newInstance()
             }
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, infoOverviewFragment, InfoOverViewFragment.FRAGMENT_TAG)
+                    .commit()
         }
     }
+
 
     private fun setBackBehaviourToFinishActivity() {
         back_button.setOnClickListener {
@@ -65,22 +58,5 @@ class AppInfoActivity : AppCompatActivity(), ValoriMapFragment.OnMapSelected {
         forward_button.visibility = View.INVISIBLE
         leave_app_button.visibility = View.INVISIBLE
         info_button.visibility = View.INVISIBLE
-    }
-
-
-    private fun submitEmail(body: String) {
-        val emailAdresses = arrayOf("test@test.nl")
-        composeEmail(emailAdresses, "Test email subject", body)
-    }
-
-    private fun composeEmail(addresses: Array<String>, subject: String, body: String) {
-        val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("mailto:") // only email apps should handle this
-        intent.putExtra(Intent.EXTRA_EMAIL, addresses)
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        intent.putExtra(Intent.EXTRA_TEXT, body)
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        }
     }
 }
