@@ -4,20 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar">
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/layout_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <TextView
                 android:id="@+id/title"
                 style="@style/title"
@@ -70,7 +56,4 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Submit"/>
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
-
 </android.support.constraint.ConstraintLayout>
