@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/root_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +9,6 @@
     tools:context=".AppInfoActivity"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
-
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -29,11 +30,10 @@
                 android:text="@string/app_info_title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <fragment
-                android:id="@+id/map_fragment"
-                class="com.example.prestashopwebview.ValoriMapFragment"
-                android:layout_width="match_parent"
+            <FrameLayout
                 app:layout_constraintTop_toBottomOf="@id/title"
+                android:id="@+id/map_fragment"
+                android:layout_width="match_parent"
                 android:layout_height="350dp"/>
             <TextView
                 android:layout_marginTop="16dp"

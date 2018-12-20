@@ -3,17 +3,22 @@ package com.example.prestashopwebview
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.prestashopwebview.data.AddressMap
+import com.example.prestashopwebview.databinding.ValoriMapFragmentBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_app_info.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -24,10 +29,26 @@ class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.Permiss
         fun newInstance(): ValoriMapFragment {
             return ValoriMapFragment()
         }
+        val FRAGMENT_TAG = "FRAGMENT_TAG:${ValoriMapFragment::class.java.simpleName}"
     }
 
+    fun setData(address: AddressMap) {
+        addressObject = address
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnMapSelected) {
+            listener = context
+        } else {
+            throw ClassCastException(context.toString() + " must implement OnMapSelected.")
+        }
+    }
+
+    private lateinit var listener: OnMapSelected
     val VALORI_LATITUDE_AND_LONGITUDE = LatLng(52.0673941, 5.0841556)
     val ZOOM_LEVEL = 11f
+    lateinit var addressObject: AddressMap
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -37,9 +58,15 @@ class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.Permiss
     private lateinit var map: GoogleMap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.valori_map_fragment, container, false)
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
+            val mapBinding: ValoriMapFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.valori_map_fragment, container, false)
+            mapBinding.addressMap = addressObject
+        return mapBinding.root//inflater.inflate(R.layout.valori_map_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setUpMap()
     }
 
@@ -72,6 +99,7 @@ class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.Permiss
             moveCamera(CameraUpdateFactory.newLatLngZoom(VALORI_LATITUDE_AND_LONGITUDE, ZOOM_LEVEL))
             addMarker(MarkerOptions().position(VALORI_LATITUDE_AND_LONGITUDE))
         }
+        map.setOnMapClickListener{ listener.onMapSelected() }
         map.uiSettings.isScrollGesturesEnabled = false
         map.uiSettings.isZoomGesturesEnabled = true
         enableMyLocation()
@@ -111,4 +139,9 @@ class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.Permiss
     }
 
 
+    interface OnMapSelected {
+        fun onMapSelected()
+    }
 }
+
+

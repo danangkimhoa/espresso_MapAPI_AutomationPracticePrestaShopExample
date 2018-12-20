@@ -13,6 +13,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_navigation_bar.*
 import android.webkit.WebView
+import kotlinx.android.synthetic.main.activity_app_info.*
 
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
