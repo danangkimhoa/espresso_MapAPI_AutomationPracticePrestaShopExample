@@ -1,17 +1,11 @@
-package com.example.prestashopwebview
+package com.example.prestashopwebview.appInfo
 
-import android.content.Intent
-import android.icu.text.IDNA
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
 import android.view.View
-import com.example.prestashopwebview.Utils.hideKeyboard
+import com.example.prestashopwebview.R
 import com.example.prestashopwebview.data.AddressMap
-import kotlinx.android.synthetic.main.activity_app_info.*
 import kotlinx.android.synthetic.main.bottom_navigation_bar.*
-import kotlinx.android.synthetic.main.valori_map_fragment.*
 
 class AppInfoActivity : AppCompatActivity(), ValoriMapFragment.OnMapSelected {
 

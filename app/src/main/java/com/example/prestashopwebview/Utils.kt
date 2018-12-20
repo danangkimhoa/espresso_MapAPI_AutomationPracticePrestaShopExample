@@ -1,6 +1,8 @@
 package com.example.prestashopwebview
 
 import android.app.Activity
+import android.content.Context
+import android.net.ConnectivityManager
 import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -16,5 +18,13 @@ object Utils {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun checkInternetConnection(context: Context): Boolean {
+
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        return (connectivityManager.activeNetworkInfo != null
+                && connectivityManager.activeNetworkInfo.isConnected)
     }
 }

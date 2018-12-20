@@ -7,13 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.KeyEvent
-import android.view.View
 import android.webkit.WebViewClient
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_navigation_bar.*
 import android.webkit.WebView
-import kotlinx.android.synthetic.main.activity_app_info.*
+import com.example.prestashopwebview.appInfo.AppInfoActivity
 
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
@@ -33,11 +32,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         setForwardButtonToNavigateForwardInWebViewHistory()
         setLeaveAppButtonToOpenUrlInBrowser()
         setInfoButtonToOpenAppInfoActivity()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        // refresh webview?
     }
 
     private fun setInfoButtonToOpenAppInfoActivity() {
@@ -113,7 +107,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun loadUrl() {
-        if (!DetectConnection.checkInternetConnection(this@MainActivity)) {
+        if (!Utils.checkInternetConnection(this@MainActivity)) {
             Toast.makeText(this, getString(R.string.page_load_connectivity_error), Toast.LENGTH_LONG).apply { show() }
         } else {
             prestashop_webview.loadUrl(prestashop_webview.url
