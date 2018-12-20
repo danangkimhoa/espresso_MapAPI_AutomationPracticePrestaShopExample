@@ -18,23 +18,30 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_app_info.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import java.io.Serializable
 
 private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+private const val ADDRESS = "addressmap"
 
 class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCallbacks {
+
+
     companion object {
-        fun newInstance(): ValoriMapFragment {
-            return ValoriMapFragment()
+        fun newInstance(mapAddressModel: AddressMap): ValoriMapFragment {
+            val args = Bundle()
+            args.putSerializable(ADDRESS, mapAddressModel as Serializable)
+            val fragment = ValoriMapFragment()
+            fragment.arguments = args
+            return fragment
         }
         val FRAGMENT_TAG = "FRAGMENT_TAG:${ValoriMapFragment::class.java.simpleName}"
     }
 
-    fun setData(address: AddressMap) {
-        addressObject = address
-    }
+//    fun setData(address: AddressMap) {
+//        addressObject = address
+//    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -48,7 +55,6 @@ class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.Permiss
     private lateinit var listener: OnMapSelected
     val VALORI_LATITUDE_AND_LONGITUDE = LatLng(52.0673941, 5.0841556)
     val ZOOM_LEVEL = 11f
-    lateinit var addressObject: AddressMap
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -61,7 +67,9 @@ class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.Permiss
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
             val mapBinding: ValoriMapFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.valori_map_fragment, container, false)
-            mapBinding.addressMap = addressObject
+
+        mapBinding.addressMap = arguments?.getSerializable(ADDRESS) as AddressMap
+
         return mapBinding.root//inflater.inflate(R.layout.valori_map_fragment, container, false)
     }
 

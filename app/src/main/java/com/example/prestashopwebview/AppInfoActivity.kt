@@ -18,9 +18,8 @@ class AppInfoActivity : AppCompatActivity(), ValoriMapFragment.OnMapSelected {
     override fun onMapSelected() {
         var mapFragment = supportFragmentManager.findFragmentByTag(ValoriMapFragment.FRAGMENT_TAG) as? ValoriMapFragment
         if (mapFragment == null) {
-            mapFragment = ValoriMapFragment.newInstance()
+            mapFragment = ValoriMapFragment.newInstance(AddressMap(getString(R.string.app_info_body_text)))
         }
-        mapFragment.setData(AddressMap(getString(R.string.app_info_body_text)))
         supportFragmentManager.beginTransaction().remove(mapFragment).commit();
         supportFragmentManager.executePendingTransactions();
         supportFragmentManager.beginTransaction()

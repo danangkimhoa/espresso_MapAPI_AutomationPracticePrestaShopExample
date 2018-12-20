@@ -23,12 +23,12 @@ class InfoOverViewFragment: Fragment() {
         if (savedInstanceState == null) {
             var mapFragment = childFragmentManager.findFragmentByTag(ValoriMapFragment.FRAGMENT_TAG) as? ValoriMapFragment
             if (mapFragment == null) {
-                mapFragment = ValoriMapFragment.newInstance()
+                mapFragment = ValoriMapFragment.newInstance(AddressMap(getString(R.string.app_info_body_text)))
             }
             childFragmentManager.beginTransaction()
                     .replace(R.id.map_fragment, mapFragment, ValoriMapFragment.FRAGMENT_TAG)
                     .commit()
-            mapFragment.setData(AddressMap(getString(R.string.app_info_body_text)))
+            //mapFragment.setData(AddressMap(getString(R.string.app_info_body_text)))
         }
         return inflater.inflate(R.layout.info_overview_fragment, container, false)
     }
