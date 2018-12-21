@@ -40,10 +40,4 @@
                 app:layout_constraintTop_toBottomOf="@id/map_fragment_container"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
-    <include
-        android:id="@+id/bottom_navigation_bar"
-        layout="@layout/bottom_navigation_bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollview"/>
 </android.support.constraint.ConstraintLayout>

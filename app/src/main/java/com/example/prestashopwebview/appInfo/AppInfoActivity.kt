@@ -12,8 +12,6 @@ class AppInfoActivity : AppCompatActivity(), ValoriMapFragment.OnMapSelected {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_info)
-        hideUnusedNavigationButtons()
-        setBackBehaviourToFinishActivity()
         setUpMapFragment()
         setUpInfoFragment()
     }
@@ -53,17 +51,5 @@ class AppInfoActivity : AppCompatActivity(), ValoriMapFragment.OnMapSelected {
                 .replace(R.id.map_fragment_container, mapFragment, ValoriMapFragment.FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit()
-    }
-
-    private fun setBackBehaviourToFinishActivity() {
-        back_button.setOnClickListener {
-            finish()
-        }
-    }
-
-    private fun hideUnusedNavigationButtons() {
-        forward_button.visibility = View.INVISIBLE
-        leave_app_button.visibility = View.INVISIBLE
-        info_button.visibility = View.INVISIBLE
     }
 }
