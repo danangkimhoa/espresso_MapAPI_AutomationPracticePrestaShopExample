@@ -17,7 +17,14 @@ import com.example.prestashopwebview.appInfo.AppInfoActivity
 
 class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     override fun onRefresh() {
-        loadUrl()
+        // loadUrl() // uncomment this if you want to reload the current url
+
+        // uncomment the if statement below if you'd like to reload the original url
+        if (!Utils.checkInternetConnection(this@MainActivity)) {
+            Toast.makeText(this, getString(R.string.page_load_connectivity_error), Toast.LENGTH_LONG).apply { show() }
+        } else {
+            prestashop_webview.loadUrl(getString(R.string.prestashop_url))
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +53,6 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
         prestashop_webview.webViewClient = object: WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                //webview_progress.visibility = View.VISIBLE
                 swipe.isRefreshing = true
                 super.onPageStarted(view, url, favicon)
             }

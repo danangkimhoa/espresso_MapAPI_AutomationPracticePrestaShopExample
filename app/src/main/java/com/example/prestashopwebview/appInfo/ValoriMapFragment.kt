@@ -86,7 +86,6 @@ class ValoriMapFragment: Fragment(), OnMapReadyCallback, EasyPermissions.Permiss
 
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap ?: return
-
         with(googleMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(VALORI_LATITUDE_AND_LONGITUDE, ZOOM_LEVEL))
             addMarker(MarkerOptions().position(VALORI_LATITUDE_AND_LONGITUDE))

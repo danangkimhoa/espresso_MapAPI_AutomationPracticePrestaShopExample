@@ -1,61 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/title"
-                style="@style/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_info_title"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <FrameLayout
-                app:layout_constraintTop_toBottomOf="@id/title"
-                android:id="@+id/map_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"/>
-            <TextView
-                android:layout_marginTop="16dp"
                 android:id="@+id/email_title"
+                style="@style/subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/subtitle"
+                android:layout_marginTop="16dp"
                 android:text="Contact Us"
-                app:layout_constraintTop_toBottomOf="@id/map_fragment"/>
+                app:layout_constraintTop_toTopOf="parent"/>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/email_input_layout"
+                style="@style/textViewStyling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/MyHintText"
-                app:layout_constraintTop_toBottomOf="@id/email_title"
-                app:errorTextAppearance="@style/MyErrorText"
                 app:errorEnabled="true"
-                style="@style/textViewStyling">
-
+                app:errorTextAppearance="@style/MyErrorText"
+                app:hintTextAppearance="@style/MyHintText"
+                app:layout_constraintTop_toBottomOf="@id/email_title">
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/email_text_box"
-                    android:inputType="textMultiLine"
-                    android:hint="Enter email message"
-                    android:lines="8"
-                    android:minLines="6"
-                    android:gravity="top|left"
-                    android:maxLines="10"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|left"
+                    android:hint="Enter email message"
+                    android:inputType="textMultiLine"
+                    android:lines="8"
+                    android:maxLines="10"
+                    android:minLines="6"
                     android:scrollbars="vertical" />
             </android.support.design.widget.TextInputLayout>
-
             <Button
                 android:id="@+id/submit_email"
-                app:layout_constraintTop_toBottomOf="@id/email_input_layout"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:text="Submit"
                 android:theme="@style/MyButton"
+                app:layout_constraintTop_toBottomOf="@id/email_input_layout"
                 />
 </android.support.constraint.ConstraintLayout>

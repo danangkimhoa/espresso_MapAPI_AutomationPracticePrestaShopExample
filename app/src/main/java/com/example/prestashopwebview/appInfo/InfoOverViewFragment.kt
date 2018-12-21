@@ -21,25 +21,12 @@ class InfoOverViewFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setUpMapFragment(savedInstanceState)
         return inflater.inflate(R.layout.info_overview_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpEmailButton()
-    }
-
-    private fun setUpMapFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            var mapFragment = childFragmentManager.findFragmentByTag(ValoriMapFragment.FRAGMENT_TAG) as? ValoriMapFragment
-            if (mapFragment == null) {
-                mapFragment = ValoriMapFragment.newInstance(AddressMap(getString(R.string.app_info_body_text)))
-            }
-            childFragmentManager.beginTransaction()
-                    .replace(R.id.map_fragment, mapFragment, ValoriMapFragment.FRAGMENT_TAG)
-                    .commit()
-        }
     }
 
     private fun setUpEmailButton() {
@@ -62,11 +49,12 @@ class InfoOverViewFragment: Fragment() {
     }
 
     private fun composeEmail(addresses: Array<String>, subject: String, body: String) {
-        val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("mailto:") // only email apps should handle this
-        intent.putExtra(Intent.EXTRA_EMAIL, addresses)
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        intent.putExtra(Intent.EXTRA_TEXT, body)
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:") // only email apps should handle this
+            putExtra(Intent.EXTRA_EMAIL, addresses)
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
         if (intent.resolveActivity(activity!!.packageManager) != null) {
             startActivity(intent)
         }
