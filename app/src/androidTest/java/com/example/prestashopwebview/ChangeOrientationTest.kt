@@ -1,5 +1,7 @@
 package com.example.prestashopwebview
 
+import android.content.pm.ActivityInfo
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.web.assertion.WebViewAssertions.webMatches
 import androidx.test.espresso.web.model.Atoms.getTitle
 import androidx.test.espresso.web.sugar.Web.onWebView
@@ -17,13 +19,14 @@ class ChangeOrientationTest: BaseTest() {
     @Test
     fun changingOrientationShouldPreserveWebViewState() {
         onWebView()
-                .withElement(findElement(Locator.CLASS_NAME, "login")) // similar to onView(withId(...))
-                .perform(webClick()) // Similar to perform(click())
+                .withElement(findElement(Locator.CLASS_NAME, "login"))
+                .perform(webClick())
 
+        intentsRule.activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+        assertThat(intentsRule.activity.requestedOrientation, equalTo(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE))
+        onWebView()
                 .withElement(findElement(Locator.TAG_NAME, "title"))
-                // Similar to check(matches(...))
                 .check(webMatches(getTitle(), `is`(equalTo("Login - My Store"))))
-
-        
     }
 }
