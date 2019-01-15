@@ -3,9 +3,9 @@ package com.example.prestashopwebview
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.webkit.WebViewClient
 import android.widget.Toast
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun setWebViewConfig() {
         prestashop_webview.settings.javaScriptEnabled = true
+        WebView.setWebContentsDebuggingEnabled(true) // enable webview debugging for automation purposes
 
         prestashop_webview.webViewClient = object: WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
