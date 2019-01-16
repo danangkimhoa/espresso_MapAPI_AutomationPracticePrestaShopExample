@@ -1,6 +1,8 @@
 package com.example.prestashopwebview.base
 
 
+import android.app.Activity
+import android.content.ClipData
 import android.content.Context
 import android.view.View
 import androidx.test.espresso.Espresso.onView
@@ -11,6 +13,12 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
+import android.content.Context.CLIPBOARD_SERVICE
+import android.support.v4.content.ContextCompat.getSystemService
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
+import androidx.test.runner.lifecycle.Stage
+import org.jetbrains.anko.clipboardManager
+
 
 object TestUtils {
     private val KEY_SP_PACKAGE = "com.example.android.prestashopwebview_preferences"
@@ -63,6 +71,35 @@ object TestUtils {
 
         }
     }
+
+    fun getClipboardText(): String {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        var clipboardText = ""
+        val clipboard =  context.clipboardManager
+        if (clipboard.hasPrimaryClip()) clipboardText = clipboard.primaryClip.getItemAt(0).coerceToText(context).toString()
+        return clipboardText
+    }
+
+    fun setClipboardText(text: String) {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            val clipboard = InstrumentationRegistry.getInstrumentation().targetContext.clipboardManager
+            val clip: ClipData = ClipData.newPlainText("simple text", text)
+            clipboard.primaryClip = clip
+        }
+    }
+
+    private fun getCurrentActivity(): Activity? {
+        var currentActivity: Activity? = null
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            val resumedActivity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
+            for (act in resumedActivity) {
+                currentActivity = act
+                break
+            }
+        }
+        return currentActivity
+    }
+
 }
 
 class NoMatchingViewAfterWaitException(message: String) : Exception(message)
