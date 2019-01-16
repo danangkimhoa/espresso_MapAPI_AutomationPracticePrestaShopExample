@@ -18,6 +18,15 @@ import android.support.v4.content.ContextCompat.getSystemService
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
 import org.jetbrains.anko.clipboardManager
+import android.os.SystemClock
+import android.os.Build
+import android.hardware.SensorManager.getAltitude
+import android.location.LocationManager
+import android.location.Criteria
+import android.location.Location
+import android.support.v4.content.ContextCompat.getSystemService
+
+
 
 
 object TestUtils {
@@ -98,6 +107,30 @@ object TestUtils {
             }
         }
         return currentActivity
+    }
+
+    fun mockLocation(lat: Double, long: Double) {
+        val lm = InstrumentationRegistry.getInstrumentation().targetContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val criteria = Criteria()
+        criteria.accuracy = Criteria.ACCURACY_FINE
+
+        val mocLocationProvider = LocationManager.GPS_PROVIDER//lm.getBestProvider( criteria, true );
+
+        lm.addTestProvider(mocLocationProvider, false, false,
+                false, false, true, true, true, 0, 5)
+        lm.setTestProviderEnabled(mocLocationProvider, true)
+
+        val loc = Location(mocLocationProvider)
+        val mockLocation = Location(mocLocationProvider) // a string
+        mockLocation.setLatitude(lat)  // double
+        mockLocation.setLongitude(long)
+        mockLocation.setAltitude(loc.getAltitude())
+        mockLocation.setTime(System.currentTimeMillis())
+        mockLocation.setAccuracy(1F)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mockLocation.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos())
+        }
+        lm.setTestProviderLocation(mocLocationProvider, mockLocation)
     }
 
 }
