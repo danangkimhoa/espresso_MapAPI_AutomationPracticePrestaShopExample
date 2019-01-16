@@ -1,6 +1,5 @@
 package com.example.prestashopwebview.base
 
-
 import android.app.Activity
 import android.content.ClipData
 import android.content.Context
@@ -13,21 +12,14 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
-import android.content.Context.CLIPBOARD_SERVICE
-import android.support.v4.content.ContextCompat.getSystemService
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
 import org.jetbrains.anko.clipboardManager
 import android.os.SystemClock
 import android.os.Build
-import android.hardware.SensorManager.getAltitude
 import android.location.LocationManager
 import android.location.Criteria
 import android.location.Location
-import android.support.v4.content.ContextCompat.getSystemService
-
-
-
 
 object TestUtils {
     private val KEY_SP_PACKAGE = "com.example.android.prestashopwebview_preferences"
@@ -56,6 +48,19 @@ object TestUtils {
         }
         throw NoMatchingViewAfterWaitException("View not found after waiting ${viewMatcher}")
     }
+    fun waitUntilViewInteractionIsNotDisplayed(viewMatcher: Matcher<View>): Boolean {
+        var findViewInteractionCounter = 0
+        while (findViewInteractionCounter < MAX_FIND_VIEWINTERACTION_TRIES) {
+            if (!viewExists(viewMatcher)) {
+                return true
+            } else {
+                findViewInteractionCounter += 1
+                wait(TIME_TO_WAIT_BETWEEN_TRIES)
+            }
+        }
+        throw MatchingViewAfterWaitException("View still found after waiting ${viewMatcher}")
+    }
+
 
 
     fun viewExists(viewMatcher: Matcher<View>): Boolean {
@@ -97,7 +102,7 @@ object TestUtils {
         }
     }
 
-    private fun getCurrentActivity(): Activity? {
+    fun getCurrentActivity(): Activity? {
         var currentActivity: Activity? = null
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
             val resumedActivity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
@@ -136,3 +141,6 @@ object TestUtils {
 }
 
 class NoMatchingViewAfterWaitException(message: String) : Exception(message)
+
+class MatchingViewAfterWaitException(message: String) : Exception(message)
+
