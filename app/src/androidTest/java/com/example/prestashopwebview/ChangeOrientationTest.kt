@@ -21,6 +21,8 @@ class ChangeOrientationTest: BaseTest() {
         onWebView()
                 .withElement(findElement(Locator.CLASS_NAME, "login"))
                 .perform(webClick())
+                .withElement(findElement(Locator.TAG_NAME, "title"))
+                .check(webMatches(getTitle(), `is`(equalTo("Login - My Store"))))
 
         intentsRule.activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
