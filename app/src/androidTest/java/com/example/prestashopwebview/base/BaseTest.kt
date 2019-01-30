@@ -2,6 +2,7 @@ package com.example.prestashopwebview.base
 
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
 import com.example.prestashopwebview.MainActivity
 import org.junit.Rule
 import org.junit.rules.TestRule
@@ -26,5 +27,8 @@ abstract class BaseTest {
             // Take a screenshot on test failure for use in Spoon test report
              }
     }
+
+    @Rule @JvmField
+    val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
 
 }

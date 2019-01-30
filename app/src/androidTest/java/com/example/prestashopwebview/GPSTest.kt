@@ -15,16 +15,6 @@ import org.junit.Test
 
 class GPSTest: BaseTest() {
 
-    @Before
-    fun grantPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            with(getInstrumentation().uiAutomation) {
-                executeShellCommand("appops set " + InstrumentationRegistry.getInstrumentation().targetContext.packageName + " android:mock_location allow")
-                Thread.sleep(1000)
-            }
-        }
-    }
-
     @Test
     fun GPSTest() {
         TestUtils.mockLocation(52.070499, 4.300700)
@@ -35,7 +25,5 @@ class GPSTest: BaseTest() {
         TestUtils.mockLocation(49.0, 123.0)
 
         AppInfoPage().clickMyLocationButton()
-
     }
-
 }
