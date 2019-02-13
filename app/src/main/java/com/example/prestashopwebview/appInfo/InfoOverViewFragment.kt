@@ -3,13 +3,12 @@ package com.example.prestashopwebview.appInfo
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.prestashopwebview.R
 import com.example.prestashopwebview.Utils
-import com.example.prestashopwebview.data.AddressMap
 import kotlinx.android.synthetic.main.info_overview_fragment.*
 
 class InfoOverViewFragment: Fragment() {

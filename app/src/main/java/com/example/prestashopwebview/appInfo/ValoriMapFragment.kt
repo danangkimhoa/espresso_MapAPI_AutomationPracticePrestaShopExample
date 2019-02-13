@@ -4,12 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.prestashopwebview.R
 import com.example.prestashopwebview.data.AddressMap
 import com.example.prestashopwebview.databinding.ValoriMapFragmentBinding

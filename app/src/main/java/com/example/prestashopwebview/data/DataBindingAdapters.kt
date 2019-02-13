@@ -1,7 +1,7 @@
 package com.example.prestashopwebview.data
 
-import android.databinding.BindingAdapter
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 
 object DataBindingAdapters {
 

@@ -1,8 +1,8 @@
 package com.example.prestashopwebview.appInfo
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.prestashopwebview.R
 import com.example.prestashopwebview.Utils
 import com.example.prestashopwebview.data.AddressMap

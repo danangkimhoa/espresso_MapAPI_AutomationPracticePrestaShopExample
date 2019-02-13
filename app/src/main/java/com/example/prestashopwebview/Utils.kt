@@ -3,9 +3,9 @@ package com.example.prestashopwebview
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.FragmentActivity
 
 
 object Utils {
